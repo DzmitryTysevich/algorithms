@@ -9,19 +9,21 @@ public class FloodFillParametrized implements FloodFill {
 
     @Override
     public void flood(String map, FloodLogger logger) {
-        logger.log(map);
-        getFlood(map, logger);
-
-    }
-
-    private void getFlood(String map, FloodLogger logger) {
         StringBuilder stringBuilderMap = new StringBuilder(map);
         int lineLength = getLineLength(stringBuilderMap);
         addWaterPositions(stringBuilderMap, lineLength);
-        logger.log(stringBuilderMap.toString());
+        logger.log(map);
 
-        if (isLand(stringBuilderMap))
-            getFlood(stringBuilderMap.toString(), logger);
+        if (isLand(stringBuilderMap)) {
+            flood(stringBuilderMap.toString(), logger);
+        } else {
+            logger.log(stringBuilderMap.toString());
+        }
+    }
+
+    private boolean isLand(StringBuilder stringBuilderMap) {
+        return IntStream.range(0, stringBuilderMap.length())
+                .anyMatch(i -> stringBuilderMap.charAt(i) == FloodFill.LAND);
     }
 
     private void addWaterPositions(StringBuilder stringBuilderMap, int lineLength) {
@@ -60,15 +62,6 @@ public class FloodFillParametrized implements FloodFill {
                 && stringBuilderMap.charAt(index - 1) != '\n') {
             stringBuilderMap.setCharAt(index - 1, water);
         }
-    }
-
-    private boolean isLand(StringBuilder stringBuilderMap) {
-        boolean flag = false;
-        for (int i = 0; i < stringBuilderMap.length(); i++) {
-            if (stringBuilderMap.charAt(i) == FloodFill.LAND)
-                flag = true;
-        }
-        return flag;
     }
 
     private int getLineLength(StringBuilder newMap) {
