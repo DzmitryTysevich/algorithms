@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class FloodFillParametrized implements FloodFill {
-    private final char water = FloodFill.WATER;
 
     @Override
     public void flood(String map, FloodLogger logger) {
@@ -39,28 +38,28 @@ public class FloodFillParametrized implements FloodFill {
     private void addWaterInDown(StringBuilder stringBuilderMap, int lineLength, Integer index) {
         if ((index + lineLength) < stringBuilderMap.length() && (index + lineLength) >= 0
                 && stringBuilderMap.charAt(index + lineLength) != '\n') {
-            stringBuilderMap.setCharAt(index + lineLength, water);
+            stringBuilderMap.setCharAt(index + lineLength, WATER);
         }
     }
 
     private void addWaterInUp(StringBuilder stringBuilderMap, int lineLength, Integer index) {
         if ((index - lineLength) < stringBuilderMap.length() && (index - lineLength) >= 0
                 && stringBuilderMap.charAt(index - lineLength) != '\n') {
-            stringBuilderMap.setCharAt(index - lineLength, water);
+            stringBuilderMap.setCharAt(index - lineLength, WATER);
         }
     }
 
     private void addWaterInRight(StringBuilder stringBuilderMap, Integer index) {
         if ((index + 1) < stringBuilderMap.length() && (index + 1) >= 0
                 && stringBuilderMap.charAt(index + 1) != '\n') {
-            stringBuilderMap.setCharAt(index + 1, water);
+            stringBuilderMap.setCharAt(index + 1, WATER);
         }
     }
 
     private void addWaterInLeft(StringBuilder stringBuilderMap, Integer index) {
         if ((index - 1) < stringBuilderMap.length() && (index - 1) >= 0
                 && stringBuilderMap.charAt(index - 1) != '\n') {
-            stringBuilderMap.setCharAt(index - 1, water);
+            stringBuilderMap.setCharAt(index - 1, WATER);
         }
     }
 
@@ -70,7 +69,7 @@ public class FloodFillParametrized implements FloodFill {
 
     private List<Integer> getWaterIndexes(StringBuilder newMap) {
         return IntStream.range(0, newMap.length())
-                .filter(index -> newMap.charAt(index) == water)
+                .filter(index -> newMap.charAt(index) == WATER)
                 .boxed()
                 .collect(Collectors.toList());
     }
